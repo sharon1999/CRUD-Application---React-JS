@@ -16,8 +16,8 @@ function App() {
     const response = await api.get("/contacts");
     return response.data;
   };
-  const editContactHandler =  (contact) => {
-    setContact(contact)
+  const editContactHandler = (contact) => {
+    setContact(contact);
   };
 
   useEffect(() => {
@@ -32,23 +32,37 @@ function App() {
     <>
       <div className="flex justify-around	m-5">
         <h1 className="text-3xl">
-          {location.pathname === "/" ? "Contact List" : "Add"}
-          {}
+          {/* {location.pathname === "/" && location.pathname === "/edit" ? "Edit":
+           "Contact List"  "Add"} */}
+          {(() => {
+            switch (location.pathname) {             
+              case "/edit":
+                return "Edit Contact";
+              case "/add":
+                return "Add Contact";
+              default:
+                return "Contact List";
+            }
+          })()}
         </h1>
-        <button
+        {location.pathname === "/" && <button
           className="flex  text-white p-2 bg-green-400 border-0 px-1focus:outline-none hover:bg-green-600 rounded text-lg"
           onClick={() => {
             navigate("/add");
           }}
         >
-          Add Contact{" "}
-        </button>
+          Add Contact
+        </button> }
       </div>
       <Routes>
         <Route
           path="/"
           element={
-            <ContactList editContactHandler={editContactHandler} contacts={contacts} setContacts={setContacts} />
+            <ContactList
+              editContactHandler={editContactHandler}
+              contacts={contacts}
+              setContacts={setContacts}
+            />
           }
         />
         <Route
@@ -57,7 +71,13 @@ function App() {
         />
         <Route
           path="/edit"
-          element={<EditContact contact= {contact}  contacts={contacts} setContacts={setContacts} />}
+          element={
+            <EditContact
+              contact={contact}
+              contacts={contacts}
+              setContacts={setContacts}
+            />
+          }
         />
       </Routes>
     </>

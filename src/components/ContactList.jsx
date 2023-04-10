@@ -3,9 +3,9 @@ import api from "../api/contact";
 import { Route, useNavigate } from "react-router-dom";
 import EditContact from "./EditContact";
 
-function ContactList({ contacts, setContacts,editContactHandler }) {
+function ContactList({ contacts, setContacts, editContactHandler }) {
   let navigate = useNavigate();
-  const [id, setId] = useState('');
+  const [id, setId] = useState("");
   const removeContactHandler = async (id) => {
     await api.delete(`/contacts/${id}`);
     const newContactList = contacts.filter((contact) => {
@@ -13,9 +13,32 @@ function ContactList({ contacts, setContacts,editContactHandler }) {
     });
     setContacts(newContactList);
   };
-  
+
   return (
     <div>
+      <div className="flex justify-center items-center">
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="w-4/6 bg-slate-200 rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700  py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+        ></input>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="w-6 h-6 cursor-pointer"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+          />
+        </svg>
+      </div>
+
       {contacts.map((c) => {
         return (
           <div
@@ -31,10 +54,7 @@ function ContactList({ contacts, setContacts,editContactHandler }) {
               </p>
             </div>
             {/* Edit Contact */}
-            <div
-              className="flex justify-items-center cursor-pointer"
-             
-            >
+            <div className="flex justify-items-center cursor-pointer">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -44,7 +64,7 @@ function ContactList({ contacts, setContacts,editContactHandler }) {
                 className="w-6 h-6"
                 onClick={() => {
                   editContactHandler(c);
-                  navigate('/edit')
+                  navigate("/edit");
                 }}
               >
                 <path
